@@ -1,17 +1,17 @@
-# 📚 Google Books Search Interface
+#  Google Books Search Interface
 
 A simple, responsive web interface to search millions of books using the Google Books API with advanced filtering and sorting capabilities.
 
-## 🎯 Features
+##  Features
 
-- **🔍 Book Search** - Search by title, author, ISBN, etc.
-- **📖 Rich Display** - Shows title, author, description, and preview link
-- **⭐ Sort by Date** - Toggle to sort results by publication date (newest first)
-- **🎯 Filter by Author** - Real-time filtering of displayed results
-- **📝 Recent Searches** - Automatically stores up to 5 recent searches in localStorage
-- **🌙 Dark Mode** - Toggle dark theme with persistent storage
-- **📱 Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
-- **🎨 Modern UI** - Beautiful gradient backgrounds and smooth animations
+- ** Book Search** - Search by title, author, ISBN, etc.
+- ** Rich Display** - Shows title, author, description, and preview link
+- ** Sort by Date** - Toggle to sort results by publication date (newest first)
+- ** Filter by Author** - Real-time filtering of displayed results
+- ** Recent Searches** - Automatically stores up to 5 recent searches in localStorage
+- ** Dark Mode** - Toggle dark theme with persistent storage
+- ** Responsive Design** - Works seamlessly on desktop, tablet, and mobile devices
+- ** Modern UI** - Beautiful gradient backgrounds and smooth animations
 
 ## 🚀 Getting Started
 
@@ -35,7 +35,7 @@ Alternatively, use **Live Server** extension in VS Code:
 2. Click the "🔍 Search" button or press Enter
 3. Browse the results with book covers, details, and links to Google Books
 
-## 🎛️ Controls
+##  Controls
 
 | Feature              | How to Use                                                    |
 | -------------------- | ------------------------------------------------------------- |
@@ -44,22 +44,22 @@ Alternatively, use **Live Server** extension in VS Code:
 | **Filter by Author** | Enter author name in the "Filter by author" field (real-time) |
 | **Dark Mode**        | Toggle the Dark Mode switch to change theme                   |
 | **Recent Searches**  | Click any recent search button to run it again                |
-| **Clear All**        | Click 🗑️ to reset search and filters                          |
+| **Clear All**        | Click to reset search and filters                          |
 
-## 📋 API Information
+##  API Information
 
 - **API**: Google Books API v1
 - **Endpoint**: `https://www.googleapis.com/books/v1/volumes`
 - **No authentication required** for basic requests
 - **Max Results**: 40 books per search
 
-## 🛠️ Technical Stack
+##  Technical Stack
 
 - **HTML5** - Semantic markup
 - **CSS3** - Responsive grid layout, CSS variables for theming
 - **JavaScript (ES6+)** - Async/await API calls, DOM manipulation
 
-## 📚 File Structure
+##  File Structure
 
 ```
 web-infra-summative-assessement/
@@ -69,14 +69,14 @@ web-infra-summative-assessement/
 └── README.md         # This file
 ```
 
-## 🔌 Browser Compatibility
+##  Browser Compatibility
 
 - Chrome/Edge (latest)
 - Firefox (latest)
 - Safari (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-## 💾 Data Storage
+## Data Storage
 
 - **Recent Searches**: Stored in browser's localStorage (persists between sessions)
 - **Dark Mode Preference**: Stored in browser's localStorage
@@ -87,7 +87,7 @@ To clear stored data, open browser DevTools and:
 localStorage.clear();
 ```
 
-## ⚠️ Troubleshooting
+##  Troubleshooting
 
 **Problem**: "Failed to fetch books: CORS issue"
 
@@ -107,7 +107,7 @@ localStorage.clear();
 - [Fetch API Guide](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
 - [CSS Grid Layout](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Grid_Layout)
 
-## 📝 Future Enhancements
+##  Future Enhancements
 
 - [ ] Save favorite books
 - [ ] Export search results as PDF
@@ -116,10 +116,9 @@ localStorage.clear();
 - [ ] Reading list management
 - [ ] Book ratings from Google Books
 
-## 📄 License
+##  License
 
 Open source - Feel free to use and modify!
 
 ---
 
-**Made with ❤️ for book lovers everywhere**
