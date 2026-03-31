@@ -101,7 +101,7 @@ localStorage.clear();
 
 - **Solution**: Check if localStorage is enabled in your browser settings.
 
-## 🎓 Learning Resources
+##  Learning Resources
 
 - [Google Books API Documentation](https://developers.google.com/books)
 - [Fetch API Guide](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
