@@ -15,18 +15,22 @@
         </div>
 </div>
 
+<!-- Dark Mode Toggle - Top Right -->
+<div class="dark-mode-container">
+    <label class="toggle-group small">
+        <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+        </label>
+        <span id="modeLabel">🌙 Dark Mode</span>
+    </label>
+</div>
+
 <div class="container">
         
         <div class="controls">
             <input type="text" id="searchInput" placeholder="Enter search term (e.g., climate change)" />
             <input type="text" id="authorFilter" placeholder="Filter by author" />
-            <label class="toggle-group">
-                <label class="switch">
-                    <input type="checkbox" id="darkModeToggle" />
-                    <span class="slider"></span>
-                </label>
-                Dark Mode
-            </label>
             <label>
                 <input type="checkbox" id="sortNewest" /> Sort newest first
             </label>
@@ -52,6 +56,25 @@
         <div id="error" class="error hidden"></div>
         
         <div id="results" class="results-grid"></div>
+    </div>
+    
+    <div class="popular-categories">
+        <h3>📚 Popular Categories</h3>
+        <p>Quick search popular book genres</p>
+        <div class="categories-grid">
+            <button class="category-btn" data-query="fiction">Fiction</button>
+            <button class="category-btn" data-query="science fiction">Science Fiction</button>
+            <button class="category-btn" data-query="fantasy">Fantasy</button>
+            <button class="category-btn" data-query="mystery">Mystery</button>
+            <button class="category-btn" data-query="romance">Romance</button>
+            <button class="category-btn" data-query="biography">Biography</button>
+            <button class="category-btn" data-query="history">History</button>
+            <button class="category-btn" data-query="self-help">Self-Help</button>
+            <button class="category-btn" data-query="cooking">Cooking</button>
+            <button class="category-btn" data-query="travel">Travel</button>
+            <button class="category-btn" data-query="poetry">Poetry</button>
+            <button class="category-btn" data-query="children">Children's Books</button>
+        </div>
     </div>
     
     <footer class="footer">

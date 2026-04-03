@@ -1,6 +1,5 @@
-// Google Books API base URL with CORS proxy
+// Google Books API configuration
 const API_BASE = 'https://www.googleapis.com/books/v1/volumes';
-const CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
 
 // DOM elements
 const searchInput = document.getElementById('searchInput');
@@ -40,25 +39,18 @@ async function searchBooks() {
             url.searchParams.append('orderBy', orderBy);
         }
         url.searchParams.append('maxResults', '40');
-        
-        // Try direct fetch first, fallback to CORS proxy
-        let response;
-        try {
-            response = await fetch(url);
-        } catch (corsError) {
-            console.log('Direct fetch failed, trying CORS proxy...');
-            response = await fetch(CORS_PROXY + url);
-        }
-        
+
+        const response = await fetch(url);
+
         if (!response.ok) throw new Error(`API error: ${response.status}`);
-        
+
         const data = await response.json();
         allBooks = data.items || [];
         displayBooks(allBooks);
         updateResultsCount(allBooks.length);
     } catch (err) {
         console.error(err);
-        showError('Failed to fetch books: ' + err.message + '. Make sure you\'re accessing via http://localhost:8000 with a server running.');
+        showError('Failed to fetch books: ' + err.message + '. Please check your internet connection and try again.');
     } finally {
         showLoading(false);
     }
@@ -172,16 +164,27 @@ function clearRecent() {
 }
 
 // Theme functions
+function updateModeLabel() {
+    const modeLabel = document.getElementById('modeLabel');
+    if (darkModeToggle.checked) {
+        modeLabel.textContent = '☀️ Light Mode';
+    } else {
+        modeLabel.textContent = '🌙 Dark Mode';
+    }
+}
+
 function initTheme() {
     const isDark = localStorage.getItem('darkMode') === 'true';
     darkModeToggle.checked = isDark;
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    updateModeLabel();
 }
 
 function toggleDarkMode() {
     const isDark = darkModeToggle.checked;
     localStorage.setItem('darkMode', isDark);
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    updateModeLabel();
 }
 
 // Results count
@@ -207,11 +210,50 @@ function showRecent() {
 
 // Enhanced error with CORS guidance
 
+// Category button click handler
+function handleCategoryClick(e) {
+    const query = e.target.dataset.query;
+    searchInput.value = query;
+    searchBooks();
+}
+
+// Scroll handling for dark mode toggle
+let ticking = false;
+
+function handleScroll() {
+    const container = document.querySelector('.dark-mode-container');
+    if (window.scrollY <= 0) {
+        container.classList.remove('hidden');
+    } else {
+        container.classList.add('hidden');
+    }
+    ticking = false;
+}
+
+function requestTick() {
+    if (!ticking) {
+        requestAnimationFrame(handleScroll);
+        ticking = true;
+    }
+}
+
 // Init on load
 document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     renderRecentSearches();
     showRecent();
+    
+    // Add event listeners for category buttons
+    document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.addEventListener('click', handleCategoryClick);
+    });
+    
+    // Initial scroll state
+    handleScroll();
+    
+    // Scroll and resize listeners
+    window.addEventListener('scroll', requestTick);
+    window.addEventListener('resize', requestTick);
 });
 
 // Event listeners
