@@ -9,6 +9,8 @@ const searchBtn = document.getElementById('searchBtn');
 const clearBtn = document.getElementById('clearBtn');
 const clearRecentBtn = document.getElementById('clearRecentBtn');
 const darkModeToggle = document.getElementById('darkModeToggle');
+const modeLabel = document.getElementById('modeLabel');
+const categoryButtons = document.querySelectorAll('.category-btn');
 
 const recentSearches = document.getElementById('recentSearches');
 const recentList = document.getElementById('recentList');
@@ -225,16 +227,24 @@ function clearAll() {
 /* =========================
    DARK MODE
 ========================= */
+function updateModeLabel(isDark) {
+    if (modeLabel) {
+        modeLabel.textContent = isDark ? "Dark Mode" : "Light Mode";
+    }
+}
+
 function toggleDarkMode() {
     const isDark = darkModeToggle.checked;
     document.documentElement.setAttribute("data-theme", isDark ? "dark" : "light");
     localStorage.setItem("dark", isDark);
+    updateModeLabel(isDark);
 }
 
 function initTheme() {
     const saved = localStorage.getItem("dark") === "true";
     darkModeToggle.checked = saved;
     document.documentElement.setAttribute("data-theme", saved ? "dark" : "light");
+    updateModeLabel(saved);
 }
 
 /* =========================
@@ -254,6 +264,17 @@ darkModeToggle.addEventListener("change", toggleDarkMode);
 /* =========================
    INIT
 ========================= */
+categoryButtons.forEach(button => {
+    button.addEventListener("click", () => {
+        const query = button.dataset.query || button.textContent.trim();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        searchInput.value = query;
+        setTimeout(() => {
+            searchBooks();
+        }, 300);
+    });
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     initTheme();
     renderRecent();
