@@ -1,0 +1,6 @@
+{
+  "app": "Book Finder",
+  "storageMode": "localStorage",
+  "note": "This file is a starter reference file. In the current static HTML/CSS/JavaScript setup, search history is stored in the browser using localStorage, not automatically written back to this JSON file.",
+  "recentSearches": []
+}

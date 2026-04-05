@@ -1,279 +1,153 @@
-# 📚 Book Finder Web Application
+# 📚 BOOK SEARCH APPLICATION — README
+## Developer info
+Email- c.anigbogu@gmail.com
+Github Username- Chidi-max
+Repo link- https://github.com/Chidi-max/web-infra-summative-assessement.git
+Demo video link- https://youtu.be/odSRnVbu2Ds?si=zlTMQ1b-xcAK6LEZ
 
-## Assignment Submission - Web Infrastructure Summative Assessment
+## Project Overview
 
-**Student Name:** [Your Name]
-**Student ID:** [Your Student ID]
-**Course:** Web Infrastructure
-**Submission Date:** April 3, 2026
+This is a Book Search Web Application that allows users to search for books using the Google Books API. The application displays results in a clean grid layout and provides useful information such as title, author, publication year, description, and a direct preview link.
 
----
-
-## 📋 Application Overview
-
-Book Finder is a modern, responsive web application that allows users to search for books using the Google Books API. The application features a clean, intuitive interface with advanced filtering, sorting, and user interaction capabilities.
-
-### 🎯 Core Functionality
-
-- **Book Search**: Search books by title, author, ISBN, or keywords
-- **Real-time Filtering**: Filter results by author name
-- **Sorting Options**: Sort results by publication date (newest first)
-- **Recent Searches**: Persistent storage of up to 5 recent searches
-- **Dark Mode**: Toggle between light and dark themes
-- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
-- **Error Handling**: Comprehensive error handling with user-friendly messages
+It also includes features like recent searches, filtering by author, sorting by newest publications, and dark mode support.
 
 ---
 
-## 🚀 Installation & Setup
+## Purpose of the Application
 
-### Prerequisites
+The application is designed to solve the problem of quick and easy access to book information. Instead of manually browsing multiple websites, users can instantly search for books and get structured results in one place.
 
-- Modern web browser (Chrome, Firefox, Safari, Edge)
-- Internet connection for API access
-
-### Local Development Setup
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone <your-repo-url>
-   cd web-infra-summative-assessement
-   ```
-
-2. **Start local server:**
-
-   ```bash
-   python -m http.server 8000
-   ```
-
-3. **Access the application:**
-   - Open http://localhost:8000 in your browser
-   - Note: For full API functionality, use a local server (not file:// protocol)
-
-### 🌐 Production Deployment & Load Balancer Configuration
-
-**This morning's work (April 3, 2026):** Configured web01 and web02 servers behind a load balancer for high availability.
-
-#### Prerequisites
-
-- AWS account with EC2 instances (web01, web02)
-- SSH key (mykey.pem)
-- Load Balancer (ALB/ELB) created
-- Security groups configured for HTTP/HTTPS (ports 80/443) and SSH (22)
-
-#### Configuration Steps Performed
-
-1. **SSH to servers:**
-
-   ```
-   ssh -i mykey.pem ubuntu@web01-ip-address
-   ssh -i mykey.pem ubuntu@web02-ip-address
-   ```
-
-2. **Install and configure web server on both servers:**
-
-   ```
-   sudo apt update
-   sudo apt install nginx
-   sudo cp -r /path/to/webapp/* /var/www/html/
-   sudo chown -R www-data:www-data /var/www/html/
-   sudo systemctl restart nginx
-   ```
-
-3. **Configure Load Balancer:**
-   - Register web01 and web02 as targets in load balancer target group
-   - Health checks: HTTP / on port 80
-   - Update DNS to point to load balancer endpoint
-
-4. **Test configuration:**
-   - Verify health checks passing
-   - Access via load balancer DNS/URL
-   - Confirm session persistence and failover
-
-**Load Balancer Endpoint:** [Update with your ALB DNS name]
-**Server IPs:** web01: [IP], web02: [IP]
-
-**Benefits:** Automatic scaling, high availability, fault tolerance.
+It is both educational and practical, helping users discover books efficiently.
 
 ---
 
-## 🛠️ Technical Implementation
+## Features
 
-### Frontend Technologies
+### Search Functionality
+- Search books using keywords (title, author, topic)
+- Fetches real-time data from Google Books API
 
-- **HTML5**: Semantic markup with accessibility features
-- **CSS3**: Modern responsive design with CSS Grid and Flexbox
-- **JavaScript (ES6+)**: Async/await API integration, DOM manipulation
-- **Local Storage**: Persistent user preferences and search history
+### Book Display
+- Displays books in a clean grid layout (5 columns on desktop)
+- Shows:
+  - Book cover
+  - Title
+  - Author(s)
+  - Year of publication
+  - Short description
+  - Preview link
 
-### API Integration
+### Filtering & Sorting
+- Filter books by author name
+- Sort results by newest publications
 
-The application integrates with the Google Books API to fetch book data:
+### Recent Searches
+- Saves last 5 searches using localStorage
+- Click to quickly repeat a search
+- Option to clear recent searches
 
-```javascript
-// Direct API integration with Google Books
-const API_BASE = "https://www.googleapis.com/books/v1/volumes";
-```
+### Dark Mode
+- Toggle between light and dark themes
+- Saves user preference in localStorage
 
-### Key Features Implementation
-
-#### Search Functionality
-
-- Real-time search with debouncing
-- Multiple search parameters (title, author, ISBN)
-- Error handling for network issues and API failures
-
-#### Filtering & Sorting
-
-- Author-based filtering with instant results
-- Publication date sorting (newest first)
-- Persistent filter state during search
-
-#### User Experience
-
-- Dark/light theme toggle with localStorage persistence
-- Recent searches history (last 5 searches)
-- Loading states and error messages
-- Responsive design for all screen sizes
+### Error Handling
+- Handles empty search input
+- Handles API errors
+- Handles missing or broken image links
 
 ---
 
-## 📊 Application Features
+## External API Used
 
-### User Interface
+### Google Books API
+- URL: https://www.googleapis.com/books/v1/volumes
+- Used to fetch book data based on user search queries
 
-- **Search Interface**: Clean input field with search button
-- **Results Display**: Grid layout showing book covers, titles, authors, and descriptions
-- **Filter Controls**: Real-time author filtering
-- **Sort Options**: Toggle for newest publications first
-- **Recent Searches**: Dropdown list of previous searches
-- **Theme Toggle**: Dark/light mode switcher
-- **Loading States**: Visual feedback during API calls
-- **Error Messages**: User-friendly error notifications
-
-### Data Management
-
-- **API Response Processing**: Handles Google Books API JSON structure
-- **Local Storage**: Persists user preferences and search history
-- **State Management**: Maintains application state across interactions
-- **Caching**: Browser caching for static assets
-
-### Popular Categories
-
-The application includes quick-access buttons for popular book categories:
-
-- Fiction, Non-fiction, Biography, History
-- Science, Technology, Poetry, Romance
-- Mystery, Fantasy, Self-help, Cooking
+### Attribution
+This application uses the Google Books API provided by Google Developers.
 
 ---
 
-## 🎥 Demo Video
+## Key Functional Requirements Met
 
-**Demo Video Link:** [Insert link to your 2-minute demo video here]
-
-The demo video showcases:
-
-- Application functionality and user interface
-- Search, filtering, and sorting features
-- Dark mode toggle and responsive design
-- Error handling scenarios
-- Recent searches functionality
+✔ Uses external API  
+✔ Provides user interaction with data  
+✔ Includes filtering and sorting features  
+✔ Displays data in a structured grid layout  
+✔ Implements error handling for API failures  
+✔ Uses localStorage for persistent recent searches  
+✔ Responsive UI design  
 
 ---
 
-## 🐛 Development Challenges & Solutions
+## Technologies Used
 
-### Challenge 1: CORS Issues in Local Development
-
-**Problem**: Direct API calls to Google Books API caused CORS errors when running locally.
-
-**Solution**: Implemented dual-mode API handling that works in both local development and production environments.
-
-**Impact**: Improved development experience and reliable API access.
-
-### Challenge 2: State Management
-
-**Problem**: Maintaining application state across user interactions and page refreshes.
-
-**Solution**: Used localStorage for persistent data and JavaScript state management for session data.
-
-**Impact**: Seamless user experience with persistent preferences.
-
-### Challenge 3: Responsive Design
-
-**Problem**: Ensuring the application works well on all device sizes.
-
-**Solution**: Implemented CSS Grid and Flexbox with comprehensive media queries.
-
-**Impact**: Consistent experience across desktop, tablet, and mobile devices.
+- HTML5
+- CSS3 (Grid + Flexbox)
+- JavaScript (Vanilla JS)
+- Google Books API
+- LocalStorage API
 
 ---
 
-## 📚 Credits & Attribution
-
-### APIs Used
-
-- **Google Books API**
-  - Provider: Google Developers
-  - Documentation: https://developers.google.com/books
-  - Usage: Free tier (1,000 requests/day)
-  - Purpose: Book search and metadata retrieval
-
-### Technologies & Libraries
-
-- **No external libraries used** - Pure HTML5, CSS3, and JavaScript
-- **Font Awesome**: Icon library for UI elements (CDN)
-- **Google Fonts**: Typography (CDN)
-
-### Development Tools
-
-- **Visual Studio Code**: Primary development environment
-- **Git**: Version control system
-- **Python HTTP Server**: Local development server
-- **Browser DevTools**: Debugging and testing
-
----
-
-## 📋 File Structure
+## Project Structure
 
 ```
-web-infra-summative-assessement/
-├── index.html         # Main HTML structure and UI
-├── styles.css         # Responsive styling with dark mode
-├── script.js          # API integration and functionality
-├── Background image.png # Background image asset
-├── mykey.pem          # SSH key for server access
-└── README.md         # This documentation
+/project-folder
+│
+├── index.html
+├── style.css
+├── script.js
+└── README.md
 ```
 
 ---
 
-## 🎯 Assignment Compliance Checklist
+## How It Works
 
-- ✅ **Application Functionality**: Meaningful book search application with user interactions
-- ✅ **External API Integration**: Google Books API with proper error handling
-- ✅ **User Experience**: Intuitive interface with filtering, sorting, and dark mode
-- ✅ **Responsive Design**: Works on all device types and screen sizes
-- ✅ **Error Handling**: Robust error management throughout application
-- ✅ **Data Persistence**: localStorage for user preferences and search history
-- ✅ **Documentation**: Comprehensive README with all required sections
-- ✅ **Demo Video**: 2-minute demonstration of functionality
-- ✅ **Code Quality**: Clean, well-structured, and commented code
-- ✅ **Accessibility**: Semantic HTML and keyboard navigation support
-
-**Estimated Grade:** 95-100% (pending demo video submission)
+1. User enters a search term
+2. JavaScript sends request to Google Books API
+3. API returns list of books
+4. Application processes and displays results in grid format
+5. User can filter, sort, or revisit recent searches
 
 ---
 
-##  Support & Contact
+## User Interaction Features
 
-For questions about this assignment submission, please contact:
-
-- **Email**: [Your student email]
-- **Repository**: [Link to GitHub repository]
+- Click search button or press Enter to search
+- Click author filter input to refine results
+- Toggle dark mode switch
+- Click recent search buttons to repeat searches
+- Click "View Book" to open Google Books preview
 
 ---
 
-_This submission demonstrates proficiency in modern web development practices including API integration, responsive design, state management, and user experience design._
+## Error Handling
+
+The application gracefully handles:
+- Empty search input
+- No results found
+- Network/API failures
+- Missing book images
+
+---
+
+## Future Improvements
+
+- Add pagination for large results
+- Add genre/category filtering
+- Add book preview modal (instead of redirect)
+- Improve mobile UI layout further
+- Add bookmarking/favorites system
+
+---
+
+## Author
+
+Developed as a frontend project demonstrating:
+- API integration
+- Dynamic UI rendering
+- User interaction handling
+- Responsive grid layout design
+```
