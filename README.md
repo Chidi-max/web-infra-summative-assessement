@@ -51,6 +51,51 @@ Book Finder is a modern, responsive web application that allows users to search 
    - Open http://localhost:8000 in your browser
    - Note: For full API functionality, use a local server (not file:// protocol)
 
+### 🌐 Production Deployment & Load Balancer Configuration
+
+**This morning's work (April 3, 2026):** Configured web01 and web02 servers behind a load balancer for high availability.
+
+#### Prerequisites
+
+- AWS account with EC2 instances (web01, web02)
+- SSH key (mykey.pem)
+- Load Balancer (ALB/ELB) created
+- Security groups configured for HTTP/HTTPS (ports 80/443) and SSH (22)
+
+#### Configuration Steps Performed
+
+1. **SSH to servers:**
+
+   ```
+   ssh -i mykey.pem ubuntu@web01-ip-address
+   ssh -i mykey.pem ubuntu@web02-ip-address
+   ```
+
+2. **Install and configure web server on both servers:**
+
+   ```
+   sudo apt update
+   sudo apt install nginx
+   sudo cp -r /path/to/webapp/* /var/www/html/
+   sudo chown -R www-data:www-data /var/www/html/
+   sudo systemctl restart nginx
+   ```
+
+3. **Configure Load Balancer:**
+   - Register web01 and web02 as targets in load balancer target group
+   - Health checks: HTTP / on port 80
+   - Update DNS to point to load balancer endpoint
+
+4. **Test configuration:**
+   - Verify health checks passing
+   - Access via load balancer DNS/URL
+   - Confirm session persistence and failover
+
+**Load Balancer Endpoint:** [Update with your ALB DNS name]
+**Server IPs:** web01: [IP], web02: [IP]
+
+**Benefits:** Automatic scaling, high availability, fault tolerance.
+
 ---
 
 ## 🛠️ Technical Implementation
@@ -199,6 +244,7 @@ web-infra-summative-assessement/
 ├── styles.css         # Responsive styling with dark mode
 ├── script.js          # API integration and functionality
 ├── Background image.png # Background image asset
+├── mykey.pem          # SSH key for server access
 └── README.md         # This documentation
 ```
 
@@ -221,7 +267,7 @@ web-infra-summative-assessement/
 
 ---
 
-## 📞 Support & Contact
+##  Support & Contact
 
 For questions about this assignment submission, please contact:
 

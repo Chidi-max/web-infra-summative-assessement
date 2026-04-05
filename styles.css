@@ -564,26 +564,35 @@ label {
     color: #333333;
 }
 
-/* Results Grid */
+/* Results Grid - 5x6 Layout */
 .results-grid {
     padding: 30px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(5, 1fr); /* 5 columns */
     gap: 25px;
+    max-height: calc(6 * 320px + 5 * 25px); /* 6 rows */
+    overflow-y: auto;
     min-height: 200px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) var(--border-color);
 }
 
-.stats {
-    padding: 20px 30px;
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
-    background: var(--controls-bg);
-    border-bottom: 1px solid var(--border-color);
-    font-size: 14px;
-    color: var(--text-secondary);
-    font-weight: 600;
+.results-grid::-webkit-scrollbar {
+    width: 8px;
+}
+
+.results-grid::-webkit-scrollbar-track {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+
+.results-grid::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
+}
+
+.results-grid::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-hover);
 }
 
 /* Book Card */
