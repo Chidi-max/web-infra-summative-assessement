@@ -1,8 +1,11 @@
-# 📚 BOOK SEARCH APPLICATION — README
+# BOOK SEARCH APPLICATION — README
 ## Developer info
 Email- c.anigbogu@gmail.com
+
 Github Username- Chidi-max
+
 Repo link- https://github.com/Chidi-max/web-infra-summative-assessement.git
+
 Demo video link- https://youtu.be/odSRnVbu2Ds?si=zlTMQ1b-xcAK6LEZ
 
 ## Project Overview
