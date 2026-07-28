@@ -23,6 +23,15 @@ const results = document.getElementById('results');
 let allBooks = [];
 
 /* =========================
+   HELPERS
+========================= */
+function escapeHTML(str) {
+    const div = document.createElement("div");
+    div.textContent = str ?? "";
+    return div.innerHTML;
+}
+
+/* =========================
    SEARCH BOOKS
 ========================= */
 async function searchBooks() {
@@ -101,11 +110,12 @@ function displayBooks(books) {
 function createBookCard(book) {
     const v = book.volumeInfo || {};
 
-    const title = v.title || "No title";
-    const authors = v.authors ? v.authors.join(", ") : "Unknown author";
-    const description = v.description
+    const title = escapeHTML(v.title || "No title");
+    const authors = escapeHTML(v.authors ? v.authors.join(", ") : "Unknown author");
+    const rawDescription = v.description
         ? v.description.replace(/<[^>]*>/g, "").substring(0, 180) + "..."
         : "No description available.";
+    const description = escapeHTML(rawDescription);
 
     const thumbnail = v.imageLinks?.thumbnail || "";
     const preview = v.previewLink || "#";
@@ -114,19 +124,30 @@ function createBookCard(book) {
     const card = document.createElement("div");
     card.className = "book-card";
 
-    card.innerHTML = `
-        <img src="${thumbnail}" alt="${title}" class="book-thumbnail"
-        onerror="this.style.display='none'">
+    const img = document.createElement("img");
+    img.src = thumbnail;
+    img.alt = v.title || "No title";
+    img.className = "book-thumbnail";
+    img.onerror = () => { img.style.display = "none"; };
 
-        <div class="book-info">
-            <h3>${title}</h3>
-            <p><strong>Author:</strong> ${authors}</p>
-            <p><strong>Year:</strong> ${year}</p>
-            <p>${description}</p>
-
-            <a href="${preview}" target="_blank">View Book</a>
-        </div>
+    const info = document.createElement("div");
+    info.className = "book-info";
+    info.innerHTML = `
+        <h3>${title}</h3>
+        <p><strong>Author:</strong> ${authors}</p>
+        <p><strong>Year:</strong> ${year}</p>
+        <p>${description}</p>
     `;
+
+    const link = document.createElement("a");
+    link.href = preview;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.textContent = "View Book";
+    info.appendChild(link);
+
+    card.appendChild(img);
+    card.appendChild(info);
 
     return card;
 }
@@ -143,7 +164,7 @@ function filterBooks() {
     }
 
     const filtered = allBooks.filter(book => {
-        const authors = book.volumeInfo.authors || [];
+        const authors = book.volumeInfo?.authors || [];
         return authors.some(a => a.toLowerCase().includes(value));
     });
 
@@ -191,9 +212,13 @@ function renderRecent() {
 
     recentSearches.classList.remove("hidden");
 
-    recentList.innerHTML = recent
-        .map(q => `<button onclick="searchFromRecent('${q}')">${q}</button>`)
-        .join("");
+    recentList.innerHTML = "";
+    recent.forEach(q => {
+        const btn = document.createElement("button");
+        btn.textContent = q;
+        btn.addEventListener("click", () => searchFromRecent(q));
+        recentList.appendChild(btn);
+    });
 }
 
 function searchFromRecent(query) {
