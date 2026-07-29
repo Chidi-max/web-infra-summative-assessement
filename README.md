@@ -90,7 +90,7 @@ This application requires a Google Books API key to function (unauthenticated re
 6. Create a file named `config.js` in the project root with the following content:
 
 ```
-const API_KEY = 'YOUR_API_KEY_HERE';
+const API_KEY = 'API_KEY';
 ```
 
 7. `config.js` is excluded from version control via `.gitignore` 
@@ -113,7 +113,7 @@ const API_KEY = 'YOUR_API_KEY_HERE';
 
 - HTML5
 - CSS3 (Grid + Flexbox)
-- JavaScript (Vanilla JS)
+- JavaScript 
 - Google Books API
 - LocalStorage API
 - Nginx (web server)
