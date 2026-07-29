@@ -105,4 +105,4 @@ letsencrypt/
 # Backup files
 *.bak
 *.backup
-*~
+config.js

@@ -51,6 +51,8 @@ async function searchBooks() {
         const url = new URL(API_BASE);
         url.searchParams.append('q', query);
         url.searchParams.append('maxResults', '30');
+        url.searchParams.append('key', API_KEY);
+        url.searchParams.append('country', 'US');
 
         if (sortNewest.checked) {
             url.searchParams.append('orderBy', 'newest');

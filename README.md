@@ -1,9 +1,13 @@
-# 📚 BOOK SEARCH APPLICATION — README
+# BOOK SEARCH APPLICATION 
+
 ## Developer info
-Email- c.anigbogu@gmail.com
-Github Username- Chidi-max
-Repo link- https://github.com/Chidi-max/web-infra-summative-assessement.git
-Demo video link- https://youtu.be/odSRnVbu2Ds?si=zlTMQ1b-xcAK6LEZ
+- Email: c.anigbogu@gmail.com
+- GitHub Username: Chidi-max
+- Repo link: https://github.com/Chidi-max/web-infra-summative-assessement.git
+- Demo video link: https://youtu.be/odSRnVbu2Ds?si=zlTMQ1b-xcAK6LEZ
+- Live deployment (via load balancer): https://www.chidi-max.tech
+
+---
 
 ## Project Overview
 
@@ -15,9 +19,12 @@ It also includes features like recent searches, filtering by author, sorting by 
 
 ## Purpose of the Application
 
-The application is designed to solve the problem of quick and easy access to book information. Instead of manually browsing multiple websites, users can instantly search for books and get structured results in one place.
+Finding structured, reliable information about a book — beyond a single blog review or a bare Amazon listing — usually means checking several different sites. This application solves that by giving students, researchers, and general readers a single place to search, filter, and compare book information pulled directly from Google's own book database.
 
-It is both educational and practical, helping users discover books efficiently.
+It's particularly useful for:
+- Students and researchers looking for source material on a topic
+- Readers deciding between books before committing to one
+- Anyone building a personal reading list who wants quick, structured comparisons (author, year, description) rather than scattered search results
 
 ---
 
@@ -62,21 +69,43 @@ It is both educational and practical, helping users discover books efficiently.
 ### Google Books API
 - URL: https://www.googleapis.com/books/v1/volumes
 - Used to fetch book data based on user search queries
+- Requires an API key (see **API Key Setup** below)
 
 ### Attribution
-This application uses the Google Books API provided by Google Developers.
+This application uses the Google Books API provided by Google Developers: https://developers.google.com/books
+
+---
+
+## API Key Setup
+
+This application requires a Google Books API key to function (unauthenticated requests are heavily rate-limited).
+
+**To run this project yourself:**
+
+1. Go to the [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+2. Create a new project (or select an existing one)
+3. Enable the **Books API** for that project
+4. Create a new API key under **Credentials**
+5. (Recommended) Restrict the key to the **Books API** only, and restrict it to your own domain(s) under **Application restrictions → Websites**
+6. Create a file named `config.js` in the project root with the following content:
+
+```
+const API_KEY = 'YOUR_API_KEY_HERE';
+```
+
+7. `config.js` is excluded from version control via `.gitignore` 
 
 ---
 
 ## Key Functional Requirements Met
 
-✔ Uses external API  
-✔ Provides user interaction with data  
-✔ Includes filtering and sorting features  
-✔ Displays data in a structured grid layout  
-✔ Implements error handling for API failures  
-✔ Uses localStorage for persistent recent searches  
-✔ Responsive UI design  
+✔ Uses external API
+✔ Provides user interaction with data
+✔ Includes filtering and sorting features
+✔ Displays data in a structured grid layout
+✔ Implements error handling for API failures
+✔ Uses localStorage for persistent recent searches
+✔ Responsive UI design
 
 ---
 
@@ -87,6 +116,8 @@ This application uses the Google Books API provided by Google Developers.
 - JavaScript (Vanilla JS)
 - Google Books API
 - LocalStorage API
+- Nginx (web server)
+- HAProxy (load balancing)
 
 ---
 
@@ -96,8 +127,10 @@ This application uses the Google Books API provided by Google Developers.
 /project-folder
 │
 ├── index.html
-├── style.css
+├── styles.css
 ├── script.js
+├── config.js        (git-ignored, holds API_KEY)
+├── Background image.png
 └── README.md
 ```
 
@@ -133,6 +166,49 @@ The application gracefully handles:
 
 ---
 
+## Deployment
+
+The application is deployed as static files (HTML/CSS/JS) served by **Nginx** on `web-02`, sitting behind an **HAProxy** load balancer (`lb-01`) that routes incoming traffic to the web server pool. The load balancer is reachable via `www.chidi-max.tech`, with HTTPS termination and an automatic HTTP → HTTPS redirect configured on `lb-01`.
+
+### Deployment steps
+
+1. **Copy the application files to the web server** via `scp`:
+  
+   scp -i <private_key> index.html styles.css script.js config.js "Background image.png" ubuntu@<web-02-ip>:/tmp/
+   ```
+
+2. **Move the files into Nginx's web root**:
+  
+   ssh -i <private_key> ubuntu@<web-02-ip>
+   sudo mv /tmp/index.html /tmp/styles.css /tmp/script.js /tmp/config.js "/tmp/Background image.png" /var/www/html/
+   ```
+
+3. **Load balancer configuration** — HAProxy on `lb-01` is configured with a backend pool using round-robin distribution and health checks:
+   ```
+   backend web_servers
+       balance roundrobin
+       server web-02 <web-02-ip>:80 check
+
+   frontend http_front
+       bind *:80
+       bind *:443 ssl crt /etc/haproxy/certs/www.chidi-max.tech.pem
+       redirect scheme https code 301 if !{ ssl_fc }
+       default_backend web_servers
+   ```
+
+4. **DNS** — `www.chidi-max.tech` resolves to the load balancer's IP, so all traffic is routed through HAProxy rather than hitting a web server directly.
+
+### Testing the deployment
+
+- Access the app via `https://www.chidi-max.tech` (the load balancer's address), not a web server's IP directly, to confirm requests genuinely pass through HAProxy.
+- The `X-Served-By` response header confirms which backend server handled the request:
+  ```bash
+  curl -sI https://www.chidi-max.tech | grep X-Served-By
+  ```
+- Perform several searches through the live URL to confirm the deployed version functions identically to the local version.
+
+---
+
 ## Future Improvements
 
 - Add pagination for large results
@@ -150,4 +226,4 @@ Developed as a frontend project demonstrating:
 - Dynamic UI rendering
 - User interaction handling
 - Responsive grid layout design
-```
+- Deployment across a load-balanced multi-server infrastructure
