@@ -4,7 +4,7 @@
 - Email: c.anigbogu@gmail.com
 - GitHub Username: Chidi-max
 - Repo link: https://github.com/Chidi-max/web-infra-summative-assessement.git
-- Demo video link: https://youtu.be/odSRnVbu2Ds?si=zlTMQ1b-xcAK6LEZ
+- Demo video link: 
 - Live deployment (via load balancer): https://www.chidi-max.tech
 
 ---
